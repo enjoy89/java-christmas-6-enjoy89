@@ -1,40 +1,44 @@
 package christmas.view;
 
+import christmas.common.OutputMessage;
+
 public class OutputView {
 
     public static void printStartInstructions() {
-        System.out.println("안녕하세요! 우테코 식당 12월 이벤트 플래너입니다.");
+        System.out.println(OutputMessage.START_INSTRUCTIONS);
     }
 
     public static void printPreviewInstructions(int date) {
-        System.out.println("12월 " + date + "일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!");
+        System.out.println(OutputMessage.PREVIEW_INSTRUCTIONS_PREFIX.getMessage()
+                + date
+                + OutputMessage.PREVIEW_INSTRUCTIONS_POSTFIX.getMessage());
     }
 
     public static void printOrderMenus() {
-        System.out.println("<주문 메뉴>");
+        System.out.println(OutputMessage.ORDER_MENUS);
     }
 
     public static void printTotalAmountBeforeDiscount() {
-        System.out.println("<할인 전 총주문 금액>");
+        System.out.println(OutputMessage.TOTAL_AMOUNT_BEFORE_DISCOUNT);
     }
 
     public static void printGiftMenu() {
-        System.out.println("<증정 메뉴>");
+        System.out.println(OutputMessage.GIFT_MENU);
     }
 
     public static void printBenefitsDetails() {
-        System.out.println("<혜택 내역>");
+        System.out.println(OutputMessage.BENEFITS_DETAILS);
     }
 
     public static void printTotalBenefitAmount() {
-        System.out.println("<총혜택 금액>");
+        System.out.println(OutputMessage.TOTAL_BENEFIT_AMOUNT);
     }
 
     public static void printAmountAfterDiscount() {
-        System.out.println("할인 후 예상 결제 금액");
+        System.out.println(OutputMessage.AMOUNT_AFTER_DISCOUNT);
     }
 
     public static void printEventBadge() {
-        System.out.println("12월 이벤트 배지");
+        System.out.println(OutputMessage.EVENT_BADGE);
     }
 }
