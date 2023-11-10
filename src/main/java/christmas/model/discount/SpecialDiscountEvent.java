@@ -11,11 +11,16 @@ public class SpecialDiscountEvent implements DiscountEvent {
 
     @Override
     public boolean isPossibleEvent(Date date) {
-        return date.isInRange(1, 31);
+        return isPossibleDate(date);
     }
 
     @Override
     public int calculateDiscount(Amount totalAmount) {
         return 0;
     }
+
+    private boolean isPossibleDate(Date date) {
+        return date.isInRange(1, 31);
+    }
+
 }
