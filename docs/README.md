@@ -112,7 +112,7 @@
     - **SpecialDiscountEvent (특별 할인 이벤트)**
     - **GiftEvent (증정 이벤트)**
       <br></br>
-- **Bedge (배지)**
+- **Badge (배지)**
   <br>속성: 배지 이름, 총혜택 금액
   <br>기능: 총혜택 금액에 따른 배지를 부여한다.
   <br></br>
