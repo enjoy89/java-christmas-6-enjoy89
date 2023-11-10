@@ -37,10 +37,20 @@ class DateTest {
         assertThat(isInRange).isTrue();
     }
 
-    @DisplayName("날짜 범위가 주어졌을 때, 이 범위에 속하는지 비교 테스트")
+    @DisplayName("날짜 범위가 주어졌을 때, 이 범위에 속하는지 비교 테스트 - 시작 날짜보다 이전일때")
     @Test
     void isInRange2() {
         int day = 1;
+        Date date = new Date(day);
+        boolean isInRange = date.isInRange(2, 25);
+
+        assertThat(isInRange).isFalse();
+    }
+
+    @DisplayName("날짜 범위가 주어졌을 때, 이 범위에 속하는지 비교 테스트 - 끝 날자보다 후일때")
+    @Test
+    void isInRange3() {
+        int day = 26;
         Date date = new Date(day);
         boolean isInRange = date.isInRange(2, 25);
 
