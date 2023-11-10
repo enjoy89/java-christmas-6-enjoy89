@@ -3,7 +3,6 @@ package christmas.model.discount;
 import christmas.model.order.Date;
 
 public class ChristmasDiscountEvent implements DiscountEvent {
-    private static final int MIN_POSSIBLE_ORDER_AMOUNT = 10_000;
 
     private final Date date;
 
@@ -12,8 +11,8 @@ public class ChristmasDiscountEvent implements DiscountEvent {
     }
 
     @Override
-    public boolean isPossibleEvent(Date date, Amount totalAmount) {
-        return isPossibleDate(date) && isPossibleAmount(totalAmount);
+    public boolean isPossibleEvent(Date date) {
+        return isPossibleDate(date);
     }
 
     @Override
@@ -25,7 +24,4 @@ public class ChristmasDiscountEvent implements DiscountEvent {
         return date.isInRange(1, 25);
     }
 
-    private boolean isPossibleAmount(Amount totalAmount) {
-        return totalAmount.getAmount() >= MIN_POSSIBLE_ORDER_AMOUNT;
-    }
 }
