@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
+import christmas.common.ErrorMessage;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -24,7 +25,8 @@ class DateTest {
         int day = -15;
 
         assertThatThrownBy(() -> new Date(day))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining(ErrorMessage.INVALID_DATE.get());
     }
 
     @DisplayName("날짜 범위가 주어졌을 때, 이 범위에 속하는지 비교 테스트")
