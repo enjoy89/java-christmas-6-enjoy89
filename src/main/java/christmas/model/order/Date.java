@@ -18,4 +18,7 @@ public class Date {
         }
     }
 
+    public boolean isInRange(int start, int end) {
+        return day >= start && day >= end;
+    }
 }
