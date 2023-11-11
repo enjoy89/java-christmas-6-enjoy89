@@ -39,5 +39,16 @@ class SpecialDiscountEventTest {
                 .hasMessageContaining(ErrorMessage.IMPOSSIBLE_DATE_SPECIAL_EVENT.get());
     }
 
+    @DisplayName("총 주문 금액에서 특별 할인 이벤트를 적용하는 기능 테스트")
+    @Test
+    void calculateTotalDiscountAmount() {
+        //given
+        Date date = new Date(3);
+        SpecialDiscountEvent specialDiscountEvent = SpecialDiscountEvent.of(date);
 
+        //when
+        int discountAmount = specialDiscountEvent.calculateTotalDiscountAmount();
+
+        assertThat(discountAmount).isEqualTo(1000);
+    }
 }
