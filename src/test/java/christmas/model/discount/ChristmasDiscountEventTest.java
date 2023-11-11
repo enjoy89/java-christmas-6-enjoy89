@@ -15,7 +15,7 @@ class ChristmasDiscountEventTest {
     void isPossibleEvent() {
         //given
         Date date = new Date(1);
-        ChristmasDiscountEvent christmasDiscountEvent = ChristmasDiscountEvent.of(date, new Amount(10000));
+        ChristmasDiscountEvent christmasDiscountEvent = ChristmasDiscountEvent.of(date);
 
         //when
         boolean isPossibleEvent = christmasDiscountEvent.isPossibleEvent(date);
@@ -30,7 +30,7 @@ class ChristmasDiscountEventTest {
         //given
         Date date = new Date(26);
 
-        assertThatThrownBy(() -> ChristmasDiscountEvent.of(date, new Amount(10000)))
+        assertThatThrownBy(() -> ChristmasDiscountEvent.of(date))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(ErrorMessage.IMPOSSIBLE_DATE_CHRISTMAS_EVENT.get());
     }
@@ -40,12 +40,11 @@ class ChristmasDiscountEventTest {
     void calculateTotalDiscountAmount() {
         //given
         Date date = new Date(1);
-        Amount totalAmount = new Amount(10000);
         int discountAmount = 1000; // 12월 1일에 받아야하는 할인 금액
 
         //when
-        ChristmasDiscountEvent christmasDiscountEvent = ChristmasDiscountEvent.of(date, totalAmount);
-        int totalDiscountAmount = christmasDiscountEvent.calculateTotalDiscountAmount(totalAmount);
+        ChristmasDiscountEvent christmasDiscountEvent = ChristmasDiscountEvent.of(date);
+        int totalDiscountAmount = christmasDiscountEvent.calculateTotalDiscountAmount();
 
         //then
         assertThat(totalDiscountAmount).isEqualTo(discountAmount);
@@ -56,12 +55,11 @@ class ChristmasDiscountEventTest {
     void calculateTotalDiscountAmount2() {
         //given
         Date date = new Date(10);
-        Amount totalAmount = new Amount(10000);
         int discountAmount = 1900; // 12월 10일에 받아야하는 할인 금액
 
         //when
-        ChristmasDiscountEvent christmasDiscountEvent = ChristmasDiscountEvent.of(date, totalAmount);
-        int totalDiscountAmount = christmasDiscountEvent.calculateTotalDiscountAmount(totalAmount);
+        ChristmasDiscountEvent christmasDiscountEvent = ChristmasDiscountEvent.of(date);
+        int totalDiscountAmount = christmasDiscountEvent.calculateTotalDiscountAmount();
 
         //then
         assertThat(totalDiscountAmount).isEqualTo(discountAmount);
@@ -72,12 +70,11 @@ class ChristmasDiscountEventTest {
     void calculateTotalDiscountAmount3() {
         //given
         Date date = new Date(25);
-        Amount totalAmount = new Amount(10000);
         int discountAmount = 3400; // 12월 25일에 받아야하는 할인 금액
 
         //when
-        ChristmasDiscountEvent christmasDiscountEvent = ChristmasDiscountEvent.of(date, totalAmount);
-        int totalDiscountAmount = christmasDiscountEvent.calculateTotalDiscountAmount(totalAmount);
+        ChristmasDiscountEvent christmasDiscountEvent = ChristmasDiscountEvent.of(date);
+        int totalDiscountAmount = christmasDiscountEvent.calculateTotalDiscountAmount();
 
         //then
         assertThat(totalDiscountAmount).isEqualTo(discountAmount);
