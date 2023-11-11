@@ -1,9 +1,10 @@
 package christmas.model.order;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 
+import christmas.common.ErrorMessage;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -55,6 +56,34 @@ class OrderItemTest {
 
         //then
         assertThat(expectedTotalPrice).isNotEqualTo(orderItem.calculateTotalPrice());
+    }
+
+    @DisplayName("메뉴 이름을 통해 메뉴 객체의 정보를 가져오는 기능 테스트")
+    @Test
+    void getMenuByName() {
+        //given
+        String menuName = "해산물파스타";
+        OrderItem orderItem = new OrderItem(menuName, 2);
+
+        //when
+        Menus menu = orderItem.getMenuByName(menuName);
+
+        //then
+        assertEquals(Menus.MAIN_3, menu);
+    }
+
+    @DisplayName("메뉴 이름을 통해 메뉴 객체의 정보를 가져오는 기능 예외 테스트")
+    @Test
+    void getMenuByName2() {
+        //given
+        String menuName = "엉뚱한메뉴";
+        OrderItem orderItem = new OrderItem(menuName, 2);
+
+        //when
+        //then
+        assertThatThrownBy(() -> orderItem.getMenuByName(menuName))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining(ErrorMessage.INVALID_ORDER.get());
     }
 
 
