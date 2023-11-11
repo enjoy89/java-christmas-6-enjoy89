@@ -1,13 +1,26 @@
 package christmas.model.discount;
 
+import christmas.common.Constant;
+import christmas.common.ErrorMessage;
 import christmas.model.order.Date;
+import christmas.model.order.Menu;
+import christmas.model.order.MenuCategory;
 
 public class WeekendDiscountEvent implements DiscountEvent {
 
     private final Date date;
+    private final Menu menu;
 
-    public WeekendDiscountEvent(Date date) {
+    private WeekendDiscountEvent(Date date, Menu menu) {
+        if (!isPossibleEvent(date)) {
+            throw new IllegalArgumentException(ErrorMessage.IMPOSSIBLE_DATE_WEEKEND_EVENT.get());
+        }
         this.date = date;
+        this.menu = menu;
+    }
+
+    public static WeekendDiscountEvent of(Date date, Menu menu) {
+        return new WeekendDiscountEvent(date, menu);
     }
 
     @Override
@@ -16,11 +29,23 @@ public class WeekendDiscountEvent implements DiscountEvent {
     }
 
     @Override
-    public int calculateDiscount(Amount totalAmount) {
+    public int calculateTotalDiscountAmount() {
+        return calculateDiscountAmount(menu);
+    }
+
+    private int calculateDiscountAmount(Menu menu) {
+        if (isMainMenu(menu)) {
+            return menu.getPrice() - (int) Constant.WEEKDAY_WEEKEND_DISCOUNT_AMOUNT.getValue();
+        }
         return 0;
     }
 
     private boolean isPossibleDate(Date date) {
-        return date.isInRange(1, 31);
+        return date.isWeekend(date.getDay());
     }
+
+    private boolean isMainMenu(Menu menu) {
+        return menu.getCategory() == MenuCategory.MAIN;
+    }
+
 }
