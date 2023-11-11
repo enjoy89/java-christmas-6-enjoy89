@@ -1,14 +1,10 @@
 package christmas.model.discount;
 
+import christmas.common.Constant;
 import christmas.common.ErrorMessage;
 import christmas.model.order.Date;
 
 public class ChristmasDiscountEvent implements DiscountEvent {
-
-    private static final int INITIAL_DISCOUNT_AMOUNT = 1000;
-    private static final int DAILY_DISCOUNT_INCREASE = 100;
-    private static final int FIRST_DATE = 1;
-    private static final int CHRISTMAS_DATE = 25;
 
     private final Date date;
 
@@ -32,21 +28,21 @@ public class ChristmasDiscountEvent implements DiscountEvent {
     public int calculateTotalDiscountAmount() {
         int dateCount = calculateDateCount(date);
         int discountAmount = calculateDiscountAmount(dateCount);
-        return INITIAL_DISCOUNT_AMOUNT + discountAmount;
+        return (int) Constant.INITIAL_DISCOUNT_AMOUNT.getValue() + discountAmount;
     }
 
     private int calculateDateCount(Date orderDate) {
         if (isFirstDate(orderDate)) {
-            return FIRST_DATE;
+            return (int) Constant.FIRST_DATE.getValue();
         }
-        return orderDate.getDay() - FIRST_DATE;
+        return orderDate.getDay() - (int) Constant.FIRST_DATE.getValue();
     }
 
     private int calculateDiscountAmount(int dateCount) {
         if (dateCount == 1) {
             return 0;
         }
-        return dateCount * DAILY_DISCOUNT_INCREASE;
+        return dateCount * (int) Constant.DAILY_DISCOUNT_INCREASE.getValue();
     }
 
     private boolean isFirstDate(Date date) {
@@ -54,7 +50,7 @@ public class ChristmasDiscountEvent implements DiscountEvent {
     }
 
     private boolean isPossibleDate(Date date) {
-        return date.isInRange(FIRST_DATE, CHRISTMAS_DATE);
+        return date.isInRange((int) Constant.FIRST_DATE.getValue(), (int) Constant.CHRISTMAS_DATE.getValue());
     }
 
 }
