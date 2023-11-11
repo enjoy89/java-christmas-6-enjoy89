@@ -1,6 +1,7 @@
 package christmas.model.discount;
 
 import christmas.common.Constant;
+import christmas.common.DiscountEventName;
 import christmas.common.ErrorMessage;
 import christmas.model.order.Date;
 
@@ -28,6 +29,10 @@ public class SpecialDiscountEvent implements DiscountEvent {
 
     private boolean isPossibleDate(Date date) {
         return date.isSpecialDay(date.getDay());
+    }
+
+    public String getDescription() {
+        return DiscountEventName.SPECIAL_EVENT.get();
     }
 
 }

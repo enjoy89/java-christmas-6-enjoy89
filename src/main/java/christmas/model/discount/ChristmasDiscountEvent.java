@@ -1,6 +1,7 @@
 package christmas.model.discount;
 
 import christmas.common.Constant;
+import christmas.common.DiscountEventName;
 import christmas.common.ErrorMessage;
 import christmas.model.order.Date;
 
@@ -51,6 +52,10 @@ public class ChristmasDiscountEvent implements DiscountEvent {
 
     private boolean isPossibleDate(Date date) {
         return date.isInRange((int) Constant.FIRST_DATE.getValue(), (int) Constant.CHRISTMAS_DATE.getValue());
+    }
+
+    public String getDescription() {
+        return DiscountEventName.CHRISTMAS_EVENT.get();
     }
 
 }

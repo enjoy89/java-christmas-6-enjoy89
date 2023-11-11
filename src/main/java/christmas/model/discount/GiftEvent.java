@@ -1,9 +1,10 @@
 package christmas.model.discount;
 
 import christmas.common.Constant;
+import christmas.common.DiscountEventName;
 import christmas.common.ErrorMessage;
 import christmas.model.order.Date;
-import christmas.model.order.Menu;
+import christmas.model.order.Menus;
 
 public class GiftEvent {
 
@@ -27,7 +28,7 @@ public class GiftEvent {
 
 
     private int getChampagne() {
-        return Menu.DRINK_3.getPrice();
+        return Menus.DRINK_3.getPrice();
     }
 
     private boolean isPossibleDate(Date date) {
@@ -36,6 +37,10 @@ public class GiftEvent {
 
     private boolean isPossibleAmount(Amount totalAmount) {
         return totalAmount.getAmount() >= (int) Constant.GIFT_EVENT_AMOUNT.getValue();
+    }
+
+    public String getDescription() {
+        return DiscountEventName.GIFT_EVENT.get();
     }
 
 }
