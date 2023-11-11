@@ -1,5 +1,6 @@
 package christmas.model.order;
 
+import christmas.common.Constant;
 import christmas.common.ErrorMessage;
 import christmas.utils.InputValueValidator;
 import java.util.ArrayList;
@@ -37,7 +38,7 @@ public class OrderParser {
     }
 
     private static void validateOrderFormat(String orderInfo) {
-        if (!orderInfo.matches("([가-힣]+-\\d+)(,[가-힣]+-\\d+)*")) {
+        if (!orderInfo.matches((String) Constant.ORDER_FORMAT_REGEX.getValue())) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_ORDER.get());
         }
 
