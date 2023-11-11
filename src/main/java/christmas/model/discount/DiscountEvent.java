@@ -6,6 +6,6 @@ public interface DiscountEvent {
 
     boolean isPossibleEvent(Date date);
 
-    int calculateDiscount(Amount totalAmount);
+    int calculateTotalDiscountAmount();
 
 }
