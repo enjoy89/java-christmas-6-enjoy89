@@ -77,4 +77,102 @@ class DateTest {
         //then
         assertThat(isInRange).isFalse();
     }
+
+    @DisplayName("날짜가 주말인지 검사하는 기능 테스트")
+    @Test
+    void isWeekend() {
+        //given
+        int day = 1;
+
+        //when
+        Date date = new Date(day);
+        boolean isWeekend = date.isWeekend(day);
+
+        //then
+        assertThat(isWeekend).isTrue();
+    }
+
+    @DisplayName("날짜가 주말인지 검사하는 기능 예외 테스트")
+    @Test
+    void isWeekend2() {
+        //given
+        int day = 13; // 수요일
+
+        //when
+        Date date = new Date(day);
+        boolean isWeekend = date.isWeekend(day);
+
+        //then
+        assertThat(isWeekend).isFalse();
+    }
+
+    @DisplayName("날짜가 평일인지 검사하는 기능 테스트")
+    @Test
+    void isWeekday() {
+        //given
+        int day = 4;
+
+        //when
+        Date date = new Date(day);
+        boolean isWeekday = date.isWeekday(day);
+
+        //then
+        assertThat(isWeekday).isTrue();
+    }
+
+    @DisplayName("날짜가 평일인지 검사하는 기능 테스트2")
+    @Test
+    void isWeekday2() {
+        //given
+        int day = 3; // 일요일
+
+        //when
+        Date date = new Date(day);
+        boolean isWeekday = date.isWeekday(day);
+
+        //then
+        assertThat(isWeekday).isTrue();
+    }
+
+    @DisplayName("날짜가 평일인지 검사하는 기능 예외 테스트")
+    @Test
+    void isWeekday3() {
+        //given
+        int day = 16; // 토요일
+
+        //when
+        Date date = new Date(day);
+        boolean isWeekday = date.isWeekday(day);
+
+        //then
+        assertThat(isWeekday).isFalse();
+    }
+
+    @DisplayName("날짜가 특별한 날인지 검사하는 기능 테스트")
+    @Test
+    void isSpecialDay() {
+        //given
+        int day = 10;
+
+        //when
+        Date date = new Date(day);
+        boolean isSpecialDay = date.isSpecialDay(day);
+
+        //then
+        assertThat(isSpecialDay).isTrue();
+    }
+
+    @DisplayName("날짜가 특별한 날인지 검사하는 기능 예외 테스트")
+    @Test
+    void isSpecialDay2() {
+        //given
+        int day = 11;
+
+        //when
+        Date date = new Date(day);
+        boolean isSpecialDay = date.isSpecialDay(day);
+
+        //then
+        assertThat(isSpecialDay).isFalse();
+    }
 }
