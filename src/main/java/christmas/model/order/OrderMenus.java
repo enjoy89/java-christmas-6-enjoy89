@@ -5,11 +5,11 @@ import christmas.utils.InputValueValidator;
 import java.util.HashMap;
 import java.util.Map;
 
-public class OrderParser {
+public class OrderMenus {
 
     private final Map<String, Integer> orders;
 
-    private OrderParser(String orderInfo) {
+    private OrderMenus(String orderInfo) {
         this.orders = parseOrder(orderInfo);
     }
 
@@ -17,8 +17,8 @@ public class OrderParser {
         return orders;
     }
 
-    public static OrderParser of(String orderInfo) {
-        return new OrderParser(orderInfo);
+    public static OrderMenus of(String orderInfo) {
+        return new OrderMenus(orderInfo);
     }
 
     private Map<String, Integer> parseOrder(String orderInfo) {
