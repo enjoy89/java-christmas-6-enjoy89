@@ -46,7 +46,7 @@ public class ChristmasDiscountEvent implements DiscountEvent {
     }
 
     private boolean isFirstDate(Date date) {
-        return date.getDay() == 1;
+        return date.getDay() == (int) Constant.FIRST_DATE.getValue();
     }
 
     private boolean isPossibleDate(Date date) {

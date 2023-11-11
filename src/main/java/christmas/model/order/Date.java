@@ -1,5 +1,6 @@
 package christmas.model.order;
 
+import christmas.common.Constant;
 import christmas.common.ErrorMessage;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -17,7 +18,7 @@ public class Date {
     }
 
     private void validateDay(int day) {
-        if (day < 1 || day > 31) {
+        if (day < (int) Constant.FIRST_DATE.getValue() || day > (int) Constant.LAST_DATE.getValue()) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_DATE.get());
         }
     }
@@ -46,7 +47,7 @@ public class Date {
     }
 
     private boolean isChristmasDay(int day) {
-        return day == 25;
+        return day == (int) Constant.CHRISTMAS_DATE.getValue();
     }
 
     private DayOfWeek getDayOfWeek(int day) {
