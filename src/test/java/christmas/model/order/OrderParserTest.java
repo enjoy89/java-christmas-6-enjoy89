@@ -2,161 +2,150 @@ package christmas.model.order;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+import static org.assertj.core.api.AssertionsForClassTypes.tuple;
 
 import christmas.common.ErrorMessage;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class OrderMenusTest {
+class OrderParserTest {
 
-    @DisplayName("주문의 입력이 올바른지 검사하는 기능 테스트")
+    @DisplayName("주문의 입력이 올바른지 검사하는 기능 기본 테스트")
     @Test
-    void create0() {
+    void parseOrder0() {
         //given
         String input = "티본스테이크-1,바비큐립-2,초코케이크-1,제로콜라-1";
 
         //when
-        OrderMenus orderMenus = OrderMenus.of(input);
+        List<OrderItem> orderItems = OrderParser.parseOrder(input);
 
         // Then
-        assertThat(orderMenus).isNotNull();
+        assertThat(orderItems).isNotNull();
     }
 
     @DisplayName("주문의 입력이 올바른지 검사하는 기능 테스트")
     @Test
-    void create1() {
+    void parseOrder1() {
         //given
         String input = "티본스테이크-1,바비큐립-2,초코케이크-1,제로콜라-1";
 
         //when
-        OrderMenus orderMenus = OrderMenus.of(input);
+        List<OrderItem> orderItems = OrderParser.parseOrder(input);
 
-        // Then
-        assertThat(orderMenus).isNotNull();
-        assertThat(orderMenus.getOrders())
-                .containsEntry("티본스테이크", 1)
-                .containsEntry("바비큐립", 2)
-                .containsEntry("초코케이크", 1)
-                .containsEntry("제로콜라", 1);
-    }
-
-    @DisplayName("주문의 입력이 올바른지 검사하는 기능 테스트2")
-    @Test
-    void create2() {
-        //given
-        String input = "티본스테이크-1";
-
-        //when
-        OrderMenus orderMenus = OrderMenus.of(input);
-
-        // Then
-        assertThat(orderMenus).isNotNull();
-        assertThat(orderMenus.getOrders())
-                .containsEntry("티본스테이크", 1);
+        //then
+        assertThat(orderItems)
+                .hasSize(4)
+                .extracting(OrderItem::getMenuName, OrderItem::getQuantity)
+                .contains(
+                        tuple("티본스테이크", 1),
+                        tuple("바비큐립", 2),
+                        tuple("초코케이크", 1),
+                        tuple("제로콜라", 1)
+                );
     }
 
     @DisplayName("주문의 입력이 올바른지 검사하는 기능 예외 테스트 - 공백 포함")
     @Test
-    void create3() {
+    void parseOrder2() {
         //given
         String input = "티본스테이크 - 1, 초코케이크 - 2";
 
         //when
         //then
-        assertThatThrownBy(() -> OrderMenus.of(input))
+        assertThatThrownBy(() -> OrderParser.parseOrder(input))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(ErrorMessage.INVALID_ORDER.get());
     }
 
     @DisplayName("주문의 입력이 올바른지 검사하는 기능 예외 테스트 - 공백만 입력")
     @Test
-    void create4() {
+    void parseOrder3() {
         //given
         String input = " ";
 
         //when
         //then
-        assertThatThrownBy(() -> OrderMenus.of(input))
+        assertThatThrownBy(() -> OrderParser.parseOrder(input))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(ErrorMessage.INVALID_ORDER.get());
     }
 
     @DisplayName("주문의 입력이 올바른지 검사하는 기능 예외 테스트 - 널값")
     @Test
-    void create5() {
+    void parseOrder4() {
         //given
         String input = "";
 
         //when
         //then
-        assertThatThrownBy(() -> OrderMenus.of(input))
+        assertThatThrownBy(() -> OrderParser.parseOrder(input))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(ErrorMessage.INVALID_ORDER.get());
     }
 
     @DisplayName("주문의 입력이 올바른지 검사하는 기능 예외 테스트 - 수량에 문자 입력")
     @Test
-    void create6() {
+    void parseOrder5() {
         //given
         String input = "티본스테이크-a";
 
         //when
         //then
-        assertThatThrownBy(() -> OrderMenus.of(input))
+        assertThatThrownBy(() -> OrderParser.parseOrder(input))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(ErrorMessage.INVALID_ORDER.get());
     }
 
     @DisplayName("주문의 입력이 올바른지 검사하는 기능 예외 테스트 - 메뉴명 한글X")
     @Test
-    void create7() {
+    void parseOrder6() {
         //given
         String input = "menuName-1";
 
         //when
         //then
-        assertThatThrownBy(() -> OrderMenus.of(input))
+        assertThatThrownBy(() -> OrderParser.parseOrder(input))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(ErrorMessage.INVALID_ORDER.get());
     }
 
     @DisplayName("주문의 입력이 올바른지 검사하는 기능 예외 테스트 - 메뉴와 수량 사이 - 존재")
     @Test
-    void create8() {
+    void parseOrder7() {
         //given
         String input = "티본스테이크-1, 초코케이크,1";
 
         //when
         //then
-        assertThatThrownBy(() -> OrderMenus.of(input))
+        assertThatThrownBy(() -> OrderParser.parseOrder(input))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(ErrorMessage.INVALID_ORDER.get());
     }
 
     @DisplayName("주문의 입력이 올바른지 검사하는 기능 예외 테스트 - -가 여러개 존재")
     @Test
-    void create9() {
+    void parseOrder8() {
         //given
         String input = "티본스테이크-1,초코케이크--1";
 
         //when
         //then
-        assertThatThrownBy(() -> OrderMenus.of(input))
+        assertThatThrownBy(() -> OrderParser.parseOrder(input))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(ErrorMessage.INVALID_ORDER.get());
     }
 
     @DisplayName("주문의 입력이 올바른지 검사하는 기능 예외 테스트 - 메뉴명에 숫자")
     @Test
-    void create10() {
+    void parseOrder9() {
         //given
         String input = "2-1";
 
         //when
         //then
-        assertThatThrownBy(() -> OrderMenus.of(input))
+        assertThatThrownBy(() -> OrderParser.parseOrder(input))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(ErrorMessage.INVALID_ORDER.get());
     }
-
 }
