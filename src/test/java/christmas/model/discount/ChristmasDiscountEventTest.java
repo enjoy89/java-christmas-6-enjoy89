@@ -1,7 +1,9 @@
 package christmas.model.discount;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
+import christmas.common.ErrorMessage;
 import christmas.model.order.Date;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,13 +29,58 @@ class ChristmasDiscountEventTest {
     void isPossibleEvent2() {
         //given
         Date date = new Date(26);
-        ChristmasDiscountEvent christmasDiscountEvent = ChristmasDiscountEvent.of(date, new Amount(10000));
+
+        assertThatThrownBy(() -> ChristmasDiscountEvent.of(date, new Amount(10000)))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining(ErrorMessage.IMPOSSIBLE_DATE_CHRISTMAS_EVENT.get());
+    }
+
+    @DisplayName("12월 1일에 크리스마스 디데이 할인 이벤트 적용 시 할인 받는 금액을 구하는 기능 테스트")
+    @Test
+    void calculateTotalDiscountAmount() {
+        //given
+        Date date = new Date(1);
+        Amount totalAmount = new Amount(10000);
+        int discountAmount = 1000; // 12월 1일에 받아야하는 할인 금액
 
         //when
-        boolean isPossibleEvent = christmasDiscountEvent.isPossibleEvent(date);
+        ChristmasDiscountEvent christmasDiscountEvent = ChristmasDiscountEvent.of(date, totalAmount);
+        int totalDiscountAmount = christmasDiscountEvent.calculateTotalDiscountAmount(totalAmount);
 
         //then
-        assertThat(isPossibleEvent).isFalse();
+        assertThat(totalDiscountAmount).isEqualTo(discountAmount);
+    }
+
+    @DisplayName("12월 10일에 크리스마스 디데이 할인 이벤트 적용 시 할인 받는 금액을 구하는 기능 테스트")
+    @Test
+    void calculateTotalDiscountAmount2() {
+        //given
+        Date date = new Date(10);
+        Amount totalAmount = new Amount(10000);
+        int discountAmount = 1900; // 12월 10일에 받아야하는 할인 금액
+
+        //when
+        ChristmasDiscountEvent christmasDiscountEvent = ChristmasDiscountEvent.of(date, totalAmount);
+        int totalDiscountAmount = christmasDiscountEvent.calculateTotalDiscountAmount(totalAmount);
+
+        //then
+        assertThat(totalDiscountAmount).isEqualTo(discountAmount);
+    }
+
+    @DisplayName("12월 25일에 크리스마스 디데이 할인 이벤트 적용 시 할인 받는 금액을 구하는 기능 테스트")
+    @Test
+    void calculateTotalDiscountAmount3() {
+        //given
+        Date date = new Date(25);
+        Amount totalAmount = new Amount(10000);
+        int discountAmount = 3400; // 12월 25일에 받아야하는 할인 금액
+
+        //when
+        ChristmasDiscountEvent christmasDiscountEvent = ChristmasDiscountEvent.of(date, totalAmount);
+        int totalDiscountAmount = christmasDiscountEvent.calculateTotalDiscountAmount(totalAmount);
+
+        //then
+        assertThat(totalDiscountAmount).isEqualTo(discountAmount);
     }
 
 }
