@@ -22,6 +22,7 @@ class WeekdayDiscountEventTest {
         //when
         boolean isPossibleEvent = weekdayDiscountEvent.isPossibleEvent(date);
 
+        //then
         assertThat(isPossibleEvent).isTrue();
     }
 
@@ -49,12 +50,13 @@ class WeekdayDiscountEventTest {
         //when
         int discountAmount = weekdayDiscountEvent.calculateTotalDiscountAmount();
 
+        //then
         assertThat(discountAmount).isEqualTo(Menu.DESSERT_1.getPrice()
                 - (int) Constant.WEEKDAY_WEEKEND_DISCOUNT_AMOUNT.getValue());
 
     }
 
-    @DisplayName("디저트 메뉴에 평일 할인 이벤트를 적용하는 기능 테스트")
+    @DisplayName("디저트 메뉴에 평일 할인 이벤트를 적용하는 기능 테스트2")
     @Test
     void calculateTotalDiscountAmount2() {
         //given
@@ -64,6 +66,7 @@ class WeekdayDiscountEventTest {
         //when
         int discountAmount = weekdayDiscountEvent.calculateTotalDiscountAmount();
 
+        //then
         assertThat(discountAmount).isEqualTo(Menu.DESSERT_2.getPrice()
                 - (int) Constant.WEEKDAY_WEEKEND_DISCOUNT_AMOUNT.getValue());
 

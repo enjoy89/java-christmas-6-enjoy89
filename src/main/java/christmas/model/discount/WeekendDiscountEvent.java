@@ -8,14 +8,12 @@ import christmas.model.order.MenuCategory;
 
 public class WeekendDiscountEvent implements DiscountEvent {
 
-    private final Date date;
     private final Menu menu;
 
     private WeekendDiscountEvent(Date date, Menu menu) {
         if (!isPossibleEvent(date)) {
             throw new IllegalArgumentException(ErrorMessage.IMPOSSIBLE_DATE_WEEKEND_EVENT.get());
         }
-        this.date = date;
         this.menu = menu;
     }
 
