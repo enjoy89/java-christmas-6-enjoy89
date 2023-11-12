@@ -8,12 +8,14 @@ import christmas.model.order.Date;
 public class ChristmasDiscountEvent implements DiscountEvent {
 
     private final Date date;
+    private boolean applied;
 
     private ChristmasDiscountEvent(Date date) {
         if (!isPossibleEvent(date)) {
             throw new IllegalArgumentException(ErrorMessage.IMPOSSIBLE_DATE_CHRISTMAS_EVENT.get());
         }
         this.date = date;
+        this.applied = false;
     }
 
     public static ChristmasDiscountEvent of(Date date) {
@@ -27,9 +29,15 @@ public class ChristmasDiscountEvent implements DiscountEvent {
 
     @Override
     public int calculateTotalDiscountAmount() {
+        applied = true;
         int dateCount = calculateDateCount(date);
         int discountAmount = calculateDiscountAmount(dateCount);
         return (int) Constant.INITIAL_DISCOUNT_AMOUNT.getValue() + discountAmount;
+    }
+
+    @Override
+    public boolean isApplied() {
+        return applied;
     }
 
     private int calculateDateCount(Date orderDate) {

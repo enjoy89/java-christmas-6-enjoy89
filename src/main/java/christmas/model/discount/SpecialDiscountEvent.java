@@ -6,11 +6,13 @@ import christmas.common.ErrorMessage;
 import christmas.model.order.Date;
 
 public class SpecialDiscountEvent implements DiscountEvent {
+    private boolean applied;
 
     private SpecialDiscountEvent(Date date) {
         if (!isPossibleDate(date)) {
             throw new IllegalArgumentException(ErrorMessage.IMPOSSIBLE_DATE_SPECIAL_EVENT.get());
         }
+        this.applied = false;
     }
 
     public static SpecialDiscountEvent of(Date date) {
@@ -24,7 +26,13 @@ public class SpecialDiscountEvent implements DiscountEvent {
 
     @Override
     public int calculateTotalDiscountAmount() {
+        applied = true;
         return (int) Constant.INITIAL_DISCOUNT_AMOUNT.getValue();
+    }
+
+    @Override
+    public boolean isApplied() {
+        return applied;
     }
 
     private boolean isPossibleDate(Date date) {
