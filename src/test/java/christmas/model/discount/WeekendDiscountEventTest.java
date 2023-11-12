@@ -2,7 +2,6 @@ package christmas.model.discount;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 
 import christmas.common.Constant;
 import christmas.common.ErrorMessage;

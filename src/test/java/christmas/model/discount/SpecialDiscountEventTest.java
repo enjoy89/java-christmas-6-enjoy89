@@ -2,11 +2,9 @@ package christmas.model.discount;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 
 import christmas.common.ErrorMessage;
 import christmas.model.order.Date;
-import christmas.model.order.Menu;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
