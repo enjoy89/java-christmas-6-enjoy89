@@ -21,16 +21,21 @@ public class OrderItem {
     }
 
     public int calculateTotalPrice() {
-        Menus menu = getMenuByName(menuName);
+        Menu menu = getMenuByName(menuName);
         return menu.getPrice() * quantity;
     }
 
-    public Menus getMenuByName(String menuName) {
-        for (Menus menu : Menus.values()) {
+    public Menu getMenuByName(String menuName) {
+        for (Menu menu : Menu.values()) {
             if (menu.getName().equals(menuName)) {
                 return menu;
             }
         }
         throw new IllegalArgumentException(ErrorMessage.INVALID_ORDER.get());
+    }
+
+    public MenuCategory getCategory() {
+        Menu menu = getMenuByName(menuName);
+        return menu.getCategory();
     }
 }
