@@ -7,6 +7,7 @@ import christmas.common.Constant;
 import christmas.common.ErrorMessage;
 import christmas.model.order.Date;
 import christmas.model.order.Menu;
+import christmas.model.order.OrderItem;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +18,8 @@ class WeekendDiscountEventTest {
     void isPossibleEvent() {
         //given
         Date date = new Date(1);
-        WeekendDiscountEvent weekendDiscountEvent = WeekendDiscountEvent.of(date, Menu.MAIN_1);
+        OrderItem orderItem = new OrderItem("티본스테이크", 1);
+        WeekendDiscountEvent weekendDiscountEvent = WeekendDiscountEvent.of(date, orderItem);
 
         //when
         boolean isPossibleEvent = weekendDiscountEvent.isPossibleEvent(date);
@@ -31,10 +33,11 @@ class WeekendDiscountEventTest {
     void isPossibleEvent2() {
         //given
         Date date = new Date(4);
+        OrderItem orderItem = new OrderItem("티본스테이크", 1);
 
         //when
         //then
-        assertThatThrownBy(() -> WeekendDiscountEvent.of(date, Menu.MAIN_1))
+        assertThatThrownBy(() -> WeekendDiscountEvent.of(date, orderItem))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(ErrorMessage.IMPOSSIBLE_DATE_WEEKEND_EVENT.get());
     }
@@ -44,7 +47,8 @@ class WeekendDiscountEventTest {
     void calculateTotalDiscountAmount() {
         //given
         Date date = new Date(1);
-        WeekendDiscountEvent weekendDiscountEvent = WeekendDiscountEvent.of(date, Menu.MAIN_1);
+        OrderItem orderItem = new OrderItem("티본스테이크", 1);
+        WeekendDiscountEvent weekendDiscountEvent = WeekendDiscountEvent.of(date, orderItem);
 
         //when
         int discountAmount = weekendDiscountEvent.calculateTotalDiscountAmount();
@@ -59,7 +63,8 @@ class WeekendDiscountEventTest {
     void calculateTotalDiscountAmount2() {
         //given
         Date date = new Date(1);
-        WeekendDiscountEvent weekendDiscountEvent = WeekendDiscountEvent.of(date, Menu.MAIN_2);
+        OrderItem orderItem = new OrderItem("바비큐립", 1);
+        WeekendDiscountEvent weekendDiscountEvent = WeekendDiscountEvent.of(date, orderItem);
 
         //when
         int discountAmount = weekendDiscountEvent.calculateTotalDiscountAmount();
@@ -74,7 +79,8 @@ class WeekendDiscountEventTest {
     void calculateTotalDiscountAmount3() {
         //given
         Date date = new Date(1);
-        WeekendDiscountEvent weekendDiscountEvent = WeekendDiscountEvent.of(date, Menu.MAIN_3);
+        OrderItem orderItem = new OrderItem("해산물파스타", 1);
+        WeekendDiscountEvent weekendDiscountEvent = WeekendDiscountEvent.of(date, orderItem);
 
         //when
         int discountAmount = weekendDiscountEvent.calculateTotalDiscountAmount();
@@ -89,7 +95,8 @@ class WeekendDiscountEventTest {
     void calculateTotalDiscountAmount4() {
         //given
         Date date = new Date(1);
-        WeekendDiscountEvent weekendDiscountEvent = WeekendDiscountEvent.of(date, Menu.MAIN_4);
+        OrderItem orderItem = new OrderItem("크리스마스파스타", 1);
+        WeekendDiscountEvent weekendDiscountEvent = WeekendDiscountEvent.of(date, orderItem);
 
         //when
         int discountAmount = weekendDiscountEvent.calculateTotalDiscountAmount();
