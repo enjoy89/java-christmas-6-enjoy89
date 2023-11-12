@@ -83,4 +83,17 @@ class OrderInformationTest {
                 .hasMessageContaining(ErrorMessage.INVALID_ORDER.get());
     }
 
+    @DisplayName("메뉴 수량이 20개를 초과한 경우 예외 발생 테스트2")
+    @Test
+    void validate4() {
+        //given
+        String orderInfo = "양송이수프-0,제로콜라20";
+
+        //when
+        //then
+        assertThatThrownBy(() -> OrderInformation.of(orderInfo))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining(ErrorMessage.INVALID_ORDER.get());
+    }
+
 }
