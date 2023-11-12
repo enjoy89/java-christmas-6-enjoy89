@@ -7,6 +7,7 @@ import christmas.common.Constant;
 import christmas.common.ErrorMessage;
 import christmas.model.order.Date;
 import christmas.model.order.Menu;
+import christmas.model.order.OrderItem;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +18,8 @@ class WeekdayDiscountEventTest {
     void isPossibleEvent() {
         //given
         Date date = new Date(3);
-        WeekdayDiscountEvent weekdayDiscountEvent = WeekdayDiscountEvent.of(date, Menu.DESSERT_1);
+        OrderItem orderItem = new OrderItem("초코케이크", 1);
+        WeekdayDiscountEvent weekdayDiscountEvent = WeekdayDiscountEvent.of(date, orderItem);
 
         //when
         boolean isPossibleEvent = weekdayDiscountEvent.isPossibleEvent(date);
@@ -31,10 +33,11 @@ class WeekdayDiscountEventTest {
     void isPossibleEvent2() {
         //given
         Date date = new Date(8);    //주말
+        OrderItem orderItem = new OrderItem("초코케이크", 1);
 
         //when
         //then
-        assertThatThrownBy(() -> WeekdayDiscountEvent.of(date, Menu.DESSERT_1))
+        assertThatThrownBy(() -> WeekdayDiscountEvent.of(date, orderItem))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(ErrorMessage.IMPOSSIBLE_DATE_WEEKDAY_EVENT.get());
     }
@@ -45,7 +48,8 @@ class WeekdayDiscountEventTest {
     void calculateTotalDiscountAmount() {
         //given
         Date date = new Date(3);
-        WeekdayDiscountEvent weekdayDiscountEvent = WeekdayDiscountEvent.of(date, Menu.DESSERT_1);
+        OrderItem orderItem = new OrderItem("초코케이크", 1);
+        WeekdayDiscountEvent weekdayDiscountEvent = WeekdayDiscountEvent.of(date,orderItem);
 
         //when
         int discountAmount = weekdayDiscountEvent.calculateTotalDiscountAmount();
@@ -61,7 +65,8 @@ class WeekdayDiscountEventTest {
     void calculateTotalDiscountAmount2() {
         //given
         Date date = new Date(3);
-        WeekdayDiscountEvent weekdayDiscountEvent = WeekdayDiscountEvent.of(date, Menu.DESSERT_2);
+        OrderItem orderItem = new OrderItem("아이스크림", 1);
+        WeekdayDiscountEvent weekdayDiscountEvent = WeekdayDiscountEvent.of(date, orderItem);
 
         //when
         int discountAmount = weekdayDiscountEvent.calculateTotalDiscountAmount();

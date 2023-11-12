@@ -6,22 +6,24 @@ import christmas.common.ErrorMessage;
 import christmas.model.order.Date;
 import christmas.model.order.Menu;
 import christmas.model.order.MenuCategory;
+import christmas.model.order.OrderItem;
 
 public class WeekdayDiscountEvent implements DiscountEvent {
 
-    private final Menu menu;
+    private final OrderItem orderItem;
     private boolean applied;
 
-    private WeekdayDiscountEvent(Date date, Menu menu) {
+    private WeekdayDiscountEvent(Date date, OrderItem orderItem) {
+
         if (!isPossibleDate(date)) {
             throw new IllegalArgumentException(ErrorMessage.IMPOSSIBLE_DATE_WEEKDAY_EVENT.get());
         }
-        this.menu = menu;
+        this.orderItem = orderItem;
         this.applied = false;
     }
 
-    public static WeekdayDiscountEvent of(Date date, Menu menu) {
-        return new WeekdayDiscountEvent(date, menu);
+    public static WeekdayDiscountEvent of(Date date, OrderItem orderItem) {
+        return new WeekdayDiscountEvent(date, orderItem);
     }
 
     @Override
@@ -32,12 +34,17 @@ public class WeekdayDiscountEvent implements DiscountEvent {
     @Override
     public int calculateTotalDiscountAmount() {
         applied = true;
-        return calculateDiscountAmount(menu);
+        return calculateDiscountAmount(orderItem.getMenuByOrderItem());
     }
 
     @Override
     public boolean isApplied() {
         return applied;
+    }
+
+    @Override
+    public String getName() {
+        return DiscountEventName.WEEKDAY_EVENT.get();
     }
 
     private int calculateDiscountAmount(Menu menu) {
@@ -55,7 +62,4 @@ public class WeekdayDiscountEvent implements DiscountEvent {
         return menu.getCategory() == MenuCategory.DESSERT;
     }
 
-    public String getDescription() {
-        return DiscountEventName.WEEKDAY_EVENT.get();
-    }
 }
