@@ -39,7 +39,7 @@ class OrderItemTest {
         OrderItem orderItem = new OrderItem("해산물파스타", 2);
 
         //when
-        int expectedTotalPrice = 2 * Menus.MAIN_3.getPrice(); // 2개의 해산물파스타의 가격
+        int expectedTotalPrice = 2 * Menu.MAIN_3.getPrice(); // 2개의 해산물파스타의 가격
 
         //then
         assertEquals(expectedTotalPrice, orderItem.calculateTotalPrice());
@@ -52,7 +52,7 @@ class OrderItemTest {
         OrderItem orderItem = new OrderItem("해산물파스타", 2);
 
         //when
-        int expectedTotalPrice = 2 * Menus.MAIN_2.getPrice(); // 2개의 해산물파스타의 가격
+        int expectedTotalPrice = 2 * Menu.MAIN_2.getPrice(); // 2개의 해산물파스타의 가격
 
         //then
         assertThat(expectedTotalPrice).isNotEqualTo(orderItem.calculateTotalPrice());
@@ -66,10 +66,10 @@ class OrderItemTest {
         OrderItem orderItem = new OrderItem(menuName, 2);
 
         //when
-        Menus menu = orderItem.getMenuByName(menuName);
+        Menu menu = orderItem.getMenuByName(menuName);
 
         //then
-        assertEquals(Menus.MAIN_3, menu);
+        assertEquals(Menu.MAIN_3, menu);
     }
 
     @DisplayName("메뉴 이름을 통해 메뉴 객체의 정보를 가져오는 기능 예외 테스트")

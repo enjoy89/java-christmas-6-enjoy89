@@ -21,9 +21,9 @@ class OrderInformationTest {
         Amount totalAmount = orderInformation.getTotalAmount();
 
         //then
-        int menu1_price = Menus.MAIN_3.getPrice() * 2;  // 해산물파스타 2개 가격
-        int menu2_price = Menus.DESSERT_1.getPrice(); // 초코케이크 1개 가격
-        int menu3_price = Menus.DRINK_2.getPrice(); // 레드와인 1개 가격
+        int menu1_price = Menu.MAIN_3.getPrice() * 2;  // 해산물파스타 2개 가격
+        int menu2_price = Menu.DESSERT_1.getPrice(); // 초코케이크 1개 가격
+        int menu3_price = Menu.DRINK_2.getPrice(); // 레드와인 1개 가격
         assertThat(totalAmount.getAmount()).isEqualTo(menu1_price + menu2_price + menu3_price);
     }
 
@@ -38,9 +38,9 @@ class OrderInformationTest {
         Amount totalAmount = orderInformation.getTotalAmount();
 
         //then
-        int menu1_price = Menus.MAIN_3.getPrice() * 2;  // 해산물파스타 2개 가격
-        int menu2_price = Menus.DESSERT_2.getPrice() * 2; // 아이스크림 2개 가격
-        int menu3_price = Menus.DRINK_3.getPrice(); // 샴페인 1개 가격
+        int menu1_price = Menu.MAIN_3.getPrice() * 2;  // 해산물파스타 2개 가격
+        int menu2_price = Menu.DESSERT_2.getPrice() * 2; // 아이스크림 2개 가격
+        int menu3_price = Menu.DRINK_3.getPrice(); // 샴페인 1개 가격
         assertThat(totalAmount.getAmount()).isEqualTo(menu1_price + menu2_price + menu3_price);
     }
 
