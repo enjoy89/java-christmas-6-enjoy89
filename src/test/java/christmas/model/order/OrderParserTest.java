@@ -148,4 +148,17 @@ class OrderParserTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(ErrorMessage.INVALID_ORDER.get());
     }
+
+    @DisplayName("주문의 입력이 올바른지 검사하는 기능 예외 테스트 - 맨끝값 ,")
+    @Test
+    void parseOrder10() {
+        //given
+        String input = "해산물파스타-1,제로콜라-";
+
+        //when
+        //then
+        assertThatThrownBy(() -> OrderParser.parseOrder(input))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining(ErrorMessage.INVALID_ORDER.get());
+    }
 }
