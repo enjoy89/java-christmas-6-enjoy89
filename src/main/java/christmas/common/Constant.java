@@ -11,6 +11,7 @@ public enum Constant {
     CHRISTMAS_DATE(25),
     BLANK(" "),
     COMMA(","),
+    BAR("-"),
     MAX_ORDER_QUANTITY(20),
     MIN_MENU_QUANTITY(1),
     ORDER_FORMAT_REGEX("([가-힣]+-\\d+)(,[가-힣]+-\\d+)*");

@@ -2,7 +2,6 @@ package christmas.model.order;
 
 import christmas.common.Constant;
 import christmas.common.ErrorMessage;
-import christmas.utils.InputValueValidator;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,11 +25,11 @@ public class OrderParser {
     }
 
     private static String[] splitOrderInfo(String orderInfo) {
-        return orderInfo.split(",");
+        return orderInfo.split((String) Constant.COMMA.getValue());
     }
 
     private static String[] splitOrderItem(String orderItem) {
-        String[] parts = orderItem.split("-");
+        String[] parts = orderItem.split((String) Constant.BAR.getValue());
         if (parts.length != 2) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_ORDER.get());
         }
@@ -39,11 +38,6 @@ public class OrderParser {
 
     private static void validateOrderFormat(String orderInfo) {
         if (!orderInfo.matches((String) Constant.ORDER_FORMAT_REGEX.getValue())) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_ORDER.get());
-        }
-
-        // 이게 사용될까? 위에 조건문에서 다 걸러지는 것 같으면 삭제해야된다.
-        if (InputValueValidator.isContainsBlank(orderInfo) || InputValueValidator.isEndsWithComma(orderInfo)) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_ORDER.get());
         }
     }
