@@ -66,7 +66,7 @@ class OrderItemTest {
         OrderItem orderItem = new OrderItem(menuName, 2);
 
         //when
-        Menu menu = orderItem.getMenuByName(menuName);
+        Menu menu = orderItem.getMenuByOrderItem();
 
         //then
         assertEquals(Menu.MAIN_3, menu);
@@ -81,7 +81,7 @@ class OrderItemTest {
 
         //when
         //then
-        assertThatThrownBy(() -> orderItem.getMenuByName(menuName))
+        assertThatThrownBy(() -> orderItem.getMenuByOrderItem().getName())
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(ErrorMessage.INVALID_ORDER.get());
     }

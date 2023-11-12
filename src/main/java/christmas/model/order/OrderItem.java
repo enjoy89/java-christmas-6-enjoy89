@@ -25,7 +25,7 @@ public class OrderItem {
         return menu.getPrice() * quantity;
     }
 
-    public Menu getMenuByName(String menuName) {
+    private Menu getMenuByName(String menuName) {
         for (Menu menu : Menu.values()) {
             if (menu.getName().equals(menuName)) {
                 return menu;
@@ -37,5 +37,9 @@ public class OrderItem {
     public MenuCategory getCategory() {
         Menu menu = getMenuByName(menuName);
         return menu.getCategory();
+    }
+
+    public Menu getMenuByOrderItem() {
+        return getMenuByName(getMenuName());
     }
 }
