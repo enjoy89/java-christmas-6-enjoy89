@@ -5,12 +5,13 @@ import christmas.common.InputMessage;
 
 public class InputView {
 
-    public static void inputVisitDate() {
+    public static String inputVisitDate() {
         System.out.println(InputMessage.VISIT_DATE);
-        Console.readLine();
+        return Console.readLine();
     }
 
-    public static void inputOrderInformation() {
+    public static String inputOrderInformation() {
         System.out.println(InputMessage.ORDER_INFORMATION);
+        return Console.readLine();
     }
 }
