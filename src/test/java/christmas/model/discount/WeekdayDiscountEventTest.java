@@ -88,4 +88,20 @@ class WeekdayDiscountEventTest {
         assertThat(discount.amount()).isEqualTo((int) Constant.WEEKDAY_WEEKEND_DISCOUNT_AMOUNT.getValue() * 3);
 
     }
+
+    @DisplayName("메인 메뉴에 평일 이벤트를 적용하는 경우 예외 발생 테스트")
+    @Test
+    void calculateTotalDiscountAmount4() {
+        //given
+        OrderDate date = OrderDate.of("3");
+        OrderInformation orderInformation = OrderInformation.of("티본스테이크-1");
+        WeekdayDiscountEvent weekdayDiscountEvent = WeekdayDiscountEvent.of(date, orderInformation);
+
+        //when
+        Amount discount = weekdayDiscountEvent.calculateTotalDiscountAmount();
+
+        //then
+        assertThat(discount.amount()).isEqualTo(0);
+
+    }
 }
