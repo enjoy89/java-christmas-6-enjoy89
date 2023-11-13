@@ -89,7 +89,7 @@ public class OrderInformation {
 
     private boolean hasDuplicateMenu() {
         Set<OrderItem> orderItemSet = new HashSet<>(orderItems);
-        return orderItemSet.size() != orderItems.size();
+        return orderItemSet.size() == orderItems.size();
     }
 
 }
