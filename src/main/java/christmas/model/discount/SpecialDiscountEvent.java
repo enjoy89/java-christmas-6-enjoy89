@@ -2,45 +2,35 @@ package christmas.model.discount;
 
 import christmas.common.Constant;
 import christmas.common.DiscountEventName;
-import christmas.common.ErrorMessage;
 import christmas.model.order.Date;
+import christmas.model.order.OrderDate;
 
 public class SpecialDiscountEvent implements DiscountEvent {
-    private boolean applied;
+    private final OrderDate date;
 
-    private SpecialDiscountEvent(Date date) {
-        if (!isPossibleDate(date)) {
-            throw new IllegalArgumentException(ErrorMessage.IMPOSSIBLE_DATE_SPECIAL_EVENT.get());
-        }
-        this.applied = false;
+    public SpecialDiscountEvent(OrderDate date) {
+        this.date = date;
     }
 
-    public static SpecialDiscountEvent of(Date date) {
+    public static SpecialDiscountEvent of(OrderDate date) {
         return new SpecialDiscountEvent(date);
     }
 
     @Override
-    public boolean isPossibleEvent(Date date) {
-        return isPossibleDate(date);
-    }
-
-    @Override
-    public int calculateTotalDiscountAmount() {
-        applied = true;
-        return (int) Constant.INITIAL_DISCOUNT_AMOUNT.getValue();
-    }
-
-    @Override
-    public boolean isApplied() {
-        return applied;
+    public Amount calculateTotalDiscountAmount() {
+        int discount = 0;
+        if (isPossibleDate(date.getDate())) {
+            discount = (int) Constant.INITIAL_DISCOUNT_AMOUNT.getValue();
+        }
+        return new Amount(discount);
     }
 
     private boolean isPossibleDate(Date date) {
-        return date.isSpecialDay(date.getDay());
+        return date.isSpecialDay();
     }
 
-    public String getDescription() {
+    @Override
+    public String getName() {
         return DiscountEventName.SPECIAL_EVENT.get();
     }
-
 }

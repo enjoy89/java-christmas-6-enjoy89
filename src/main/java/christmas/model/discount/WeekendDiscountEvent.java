@@ -2,64 +2,58 @@ package christmas.model.discount;
 
 import christmas.common.Constant;
 import christmas.common.DiscountEventName;
-import christmas.common.ErrorMessage;
 import christmas.model.order.Date;
 import christmas.model.order.Menu;
 import christmas.model.order.MenuCategory;
+import christmas.model.order.OrderDate;
+import christmas.model.order.OrderInformation;
 import christmas.model.order.OrderItem;
+import java.util.List;
 
 public class WeekendDiscountEvent implements DiscountEvent {
+    private final OrderDate date;
+    private final OrderInformation orderInformation;
 
-    private final OrderItem orderItem;
-    private boolean applied;
+    private WeekendDiscountEvent(OrderDate date, OrderInformation orderInformation) {
+        this.date = date;
+        this.orderInformation = orderInformation;
+    }
 
-    private WeekendDiscountEvent(Date date, OrderItem orderItem) {
+    public static WeekendDiscountEvent of(OrderDate date, OrderInformation orderInformation) {
+        return new WeekendDiscountEvent(date, orderInformation);
+    }
 
-        if (!isPossibleEvent(date)) {
-            throw new IllegalArgumentException(ErrorMessage.IMPOSSIBLE_DATE_WEEKEND_EVENT.get());
+    @Override
+    public Amount calculateTotalDiscountAmount() {
+        int discount = 0;
+        if (isPossibleDate(date.getDate())) {
+            List<OrderItem> orderItems = orderInformation.getOrderItems();
+
+            for (OrderItem orderItem : orderItems) {
+                discount += calculateDiscountAmount(orderItem.getMenuByOrderItem(), orderItem.getQuantity());
+            }
         }
-        this.orderItem = orderItem;
-        this.applied = false;
+        return new Amount(discount);
     }
 
-    public static WeekendDiscountEvent of(Date date, OrderItem orderItem) {
-        return new WeekendDiscountEvent(date, orderItem);
+    private int calculateDiscountAmount(Menu menu, int quantity) {
+        if (isMainMenu(menu)) {
+            return (int) Constant.WEEKDAY_WEEKEND_DISCOUNT_AMOUNT.getValue() * quantity;
+        }
+        return 0;
     }
 
-    @Override
-    public boolean isPossibleEvent(Date date) {
-        return isPossibleDate(date);
+    private boolean isMainMenu(Menu menu) {
+        return menu.getCategory() == MenuCategory.MAIN;
     }
 
-    @Override
-    public int calculateTotalDiscountAmount() {
-        applied = true;
-        return calculateDiscountAmount(orderItem.getMenuByOrderItem());
-    }
-
-    @Override
-    public boolean isApplied() {
-        return applied;
+    private boolean isPossibleDate(Date date) {
+        return date.isWeekend();
     }
 
     @Override
     public String getName() {
         return DiscountEventName.WEEKEND_EVENT.get();
-    }
-
-    private int calculateDiscountAmount(Menu menu) {
-        if (isMainMenu(menu)) {
-            return menu.getPrice() - (int) Constant.WEEKDAY_WEEKEND_DISCOUNT_AMOUNT.getValue();
-        }
-        return 0;
-    }
-
-    private boolean isPossibleDate(Date date) {
-        return date.isWeekend(date.getDay());
-    }
-
-    private boolean isMainMenu(Menu menu) {
-        return menu.getCategory() == MenuCategory.MAIN;
     }
 
 }
