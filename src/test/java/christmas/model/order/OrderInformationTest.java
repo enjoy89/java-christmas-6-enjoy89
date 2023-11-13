@@ -24,7 +24,7 @@ class OrderInformationTest {
         int menu1_price = Menu.MAIN_3.getPrice() * 2;  // 해산물파스타 2개 가격
         int menu2_price = Menu.DESSERT_1.getPrice(); // 초코케이크 1개 가격
         int menu3_price = Menu.DRINK_2.getPrice(); // 레드와인 1개 가격
-        assertThat(totalAmount.getAmount()).isEqualTo(menu1_price + menu2_price + menu3_price);
+        assertThat(totalAmount.amount()).isEqualTo(menu1_price + menu2_price + menu3_price);
     }
 
     @DisplayName("주문 정보에 맞는 총가격 계산 기능 테스트2")
@@ -41,7 +41,7 @@ class OrderInformationTest {
         int menu1_price = Menu.MAIN_3.getPrice() * 2;  // 해산물파스타 2개 가격
         int menu2_price = Menu.DESSERT_2.getPrice() * 2; // 아이스크림 2개 가격
         int menu3_price = Menu.DRINK_3.getPrice(); // 샴페인 1개 가격
-        assertThat(totalAmount.getAmount()).isEqualTo(menu1_price + menu2_price + menu3_price);
+        assertThat(totalAmount.amount()).isEqualTo(menu1_price + menu2_price + menu3_price);
     }
 
     @DisplayName("음료 메뉴만 입력하는 경우 예외 발생 테스트")
@@ -96,4 +96,16 @@ class OrderInformationTest {
                 .hasMessageContaining(ErrorMessage.INVALID_ORDER.get());
     }
 
+    @DisplayName("메뉴가 중복하는 경우 예외 발생 테스트")
+    @Test
+    void validate5() {
+        //given
+        String orderInfo = "시저샐러드-1,시저샐러드-1";
+
+        //when
+        //then
+        assertThatThrownBy(() -> OrderInformation.of(orderInfo))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining(ErrorMessage.INVALID_ORDER.get());
+    }
 }
