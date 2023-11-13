@@ -3,7 +3,9 @@ package christmas.model.order;
 import christmas.common.Constant;
 import christmas.common.ErrorMessage;
 import christmas.model.discount.Amount;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class OrderInformation {
     private final List<OrderItem> orderItems;
@@ -17,6 +19,10 @@ public class OrderInformation {
 
     public static OrderInformation of(String orderInfo) {
         return new OrderInformation(OrderParser.parseOrder(orderInfo));
+    }
+
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
     }
 
     public Amount getTotalAmount() {
@@ -33,6 +39,7 @@ public class OrderInformation {
     }
 
     private void validateOrder() {
+        validateDuplicate();
         validateTotalQuantity();
         validateIsOnlyDrink();
         validateMinQuantity();
@@ -69,9 +76,20 @@ public class OrderInformation {
         }
     }
 
+    private void validateDuplicate() {
+        if (hasDuplicateMenu()) {
+            throw new IllegalArgumentException((ErrorMessage.INVALID_ORDER.get()));
+        }
+    }
+
     private boolean allItemsMinQuantity() {
         return orderItems.stream()
                 .allMatch(item -> item.getQuantity() >= (int) Constant.MIN_MENU_QUANTITY.getValue());
+    }
+
+    private boolean hasDuplicateMenu() {
+        Set<OrderItem> orderItemSet = new HashSet<>(orderItems);
+        return orderItemSet.size() != orderItems.size();
     }
 
 }
