@@ -86,7 +86,7 @@ class DateTest {
 
         //when
         Date date = new Date(day);
-        boolean isWeekend = date.isWeekend(day);
+        boolean isWeekend = date.isWeekend();
 
         //then
         assertThat(isWeekend).isTrue();
@@ -100,7 +100,7 @@ class DateTest {
 
         //when
         Date date = new Date(day);
-        boolean isWeekend = date.isWeekend(day);
+        boolean isWeekend = date.isWeekend();
 
         //then
         assertThat(isWeekend).isFalse();
@@ -114,7 +114,7 @@ class DateTest {
 
         //when
         Date date = new Date(day);
-        boolean isWeekday = date.isWeekday(day);
+        boolean isWeekday = date.isWeekday();
 
         //then
         assertThat(isWeekday).isTrue();
@@ -128,7 +128,7 @@ class DateTest {
 
         //when
         Date date = new Date(day);
-        boolean isWeekday = date.isWeekday(day);
+        boolean isWeekday = date.isWeekday();
 
         //then
         assertThat(isWeekday).isTrue();
@@ -142,7 +142,7 @@ class DateTest {
 
         //when
         Date date = new Date(day);
-        boolean isWeekday = date.isWeekday(day);
+        boolean isWeekday = date.isWeekday();
 
         //then
         assertThat(isWeekday).isFalse();
@@ -156,7 +156,7 @@ class DateTest {
 
         //when
         Date date = new Date(day);
-        boolean isSpecialDay = date.isSpecialDay(day);
+        boolean isSpecialDay = date.isSpecialDay();
 
         //then
         assertThat(isSpecialDay).isTrue();
@@ -170,7 +170,7 @@ class DateTest {
 
         //when
         Date date = new Date(day);
-        boolean isSpecialDay = date.isSpecialDay(day);
+        boolean isSpecialDay = date.isSpecialDay();
 
         //then
         assertThat(isSpecialDay).isFalse();
