@@ -1,5 +1,6 @@
 package christmas.model.discount;
 
+import christmas.common.Constant;
 import christmas.model.order.OrderDate;
 import christmas.model.order.OrderInformation;
 import java.util.ArrayList;
@@ -27,18 +28,33 @@ public class DiscountEventManager {
 
         for (DiscountEvent discountEvent : discountEvents) {
             Amount discountAmount = discountEvent.calculateTotalDiscountAmount();
-
             if (discountAmount.amount() > 0) {
                 appliedDiscountEvents.put(discountEvent.getName(), discountAmount.amount());
             }
+
             totalDiscount += discountAmount.amount();
         }
 
+        Amount applyGiftEvent = applyGiftEvent(totalDiscount);
+        totalDiscount += applyGiftEvent.amount();
         return new Amount(totalDiscount);
     }
 
     public Map<String, Integer> getAppliedDiscountEvents() {
         return appliedDiscountEvents;
+    }
+
+    private Amount applyGiftEvent(int totalDiscount) {
+        int applyGiftEvent = 0;
+        if (canApplyGiftEvent(totalDiscount)) {
+            applyGiftEvent = giftEvent.calculateTotalDiscountAmount().amount();
+        }
+        appliedDiscountEvents.put(giftEvent.getName(), applyGiftEvent);
+        return new Amount(applyGiftEvent);
+    }
+
+    private boolean canApplyGiftEvent(int totalDiscount) {
+        return totalDiscount >= (int) Constant.GIFT_EVENT_AMOUNT.getValue();
     }
 
 }
