@@ -1,73 +1,37 @@
 package christmas.model.discount;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
-import christmas.common.ErrorMessage;
-import christmas.model.order.Date;
 import christmas.model.order.Menu;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class GiftEventTest {
 
-    @DisplayName("증정 이벤트를 적용할 수 있는지 검사하는 기능 테스트")
-    @Test
-    void isPossibleEvent() {
-        //given
-        Date date = new Date(1);
-        Amount totalAmount = new Amount(120_000);
-
-        //when
-        GiftEvent giftEvent = GiftEvent.of(date, totalAmount);
-
-        //then
-        assertThat(giftEvent).isNotNull();
-    }
-
-    @DisplayName("증정 이벤트를 적용할 수 있는지 검사하는 기능 예외 테스트")
-    @Test
-    void isPossibleEvent2() {
-        //given
-        Date date = new Date(1);
-        Amount totalAmount = new Amount(10000);
-
-        //when
-        //then
-        assertThatThrownBy(() -> GiftEvent.of(date, totalAmount))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(ErrorMessage.IMPOSSIBLE_GIFT_EVENT.get());
-    }
-
-    @DisplayName("증정 이벤트 적용하는 기능 테스트")
+    @DisplayName("증정 이벤트를 할인 금액 계산 테스트")
     @Test
     void calculateTotalDiscountAmount() {
         //given
-        Date date = new Date(1);
-        Amount totalAmount = new Amount(120_000);
+        GiftEvent giftEvent = GiftEvent.of();
 
         //when
-        GiftEvent giftEvent = GiftEvent.of(date, totalAmount);
-        int giftAmount = giftEvent.calculateTotalAmount();
+        Amount amount = giftEvent.calculateTotalDiscountAmount();
 
         //then
-        assertThat(giftAmount).isEqualTo(Menu.DRINK_3.getPrice());
-
+        assertThat(amount.amount()).isNotEqualTo(0);
     }
 
-    @DisplayName("증정 이벤트 적용하는 기능 예외 테스트")
+    @DisplayName("증정 이벤트를 할인 금액 샴페인 가격과 같은지 테스트")
     @Test
     void calculateTotalDiscountAmount2() {
         //given
-        Date date = new Date(1);
-        Amount totalAmount = new Amount(120_000);
+        GiftEvent giftEvent = GiftEvent.of();
 
         //when
-        GiftEvent giftEvent = GiftEvent.of(date, totalAmount);
-        int giftAmount = giftEvent.calculateTotalAmount();
+        Amount amount = giftEvent.calculateTotalDiscountAmount();
 
         //then
-        assertThat(giftAmount).isNotEqualTo(1000); // 샴페인을 증정하므로, 이와 다른 아무 가격이나 입력
-
+        assertThat(amount.amount()).isEqualTo(Menu.DRINK_3.getPrice()); // 샴페인 가격
     }
+
 }
