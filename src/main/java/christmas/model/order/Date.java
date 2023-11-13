@@ -27,17 +27,17 @@ public class Date {
         return day >= start && day <= end;
     }
 
-    public boolean isWeekday(int day) {
-        return !isWeekend(day);
+    public boolean isWeekday() {
+        return !isWeekend();
     }
 
-    public boolean isWeekend(int day) {
+    public boolean isWeekend() {
         DayOfWeek dayOfWeek = getDayOfWeek(day);
         return dayOfWeek == DayOfWeek.FRIDAY || dayOfWeek == DayOfWeek.SATURDAY;
 
     }
 
-    public boolean isSpecialDay(int day) {
+    public boolean isSpecialDay() {
         return isSunday(day) || isChristmasDay(day);
     }
 
