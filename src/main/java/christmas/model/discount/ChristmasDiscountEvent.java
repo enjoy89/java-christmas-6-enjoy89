@@ -2,49 +2,44 @@ package christmas.model.discount;
 
 import christmas.common.Constant;
 import christmas.common.DiscountEventName;
-import christmas.common.ErrorMessage;
 import christmas.model.order.Date;
+import christmas.model.order.OrderDate;
 
 public class ChristmasDiscountEvent implements DiscountEvent {
+    private final OrderDate date;
 
-    private final Date date;
-    private boolean applied;
-
-    private ChristmasDiscountEvent(Date date) {
-        if (!isPossibleEvent(date)) {
-            throw new IllegalArgumentException(ErrorMessage.IMPOSSIBLE_DATE_CHRISTMAS_EVENT.get());
-        }
+    private ChristmasDiscountEvent(OrderDate date) {
         this.date = date;
-        this.applied = false;
     }
 
-    public static ChristmasDiscountEvent of(Date date) {
+    public static ChristmasDiscountEvent of(OrderDate date) {
         return new ChristmasDiscountEvent(date);
     }
 
     @Override
-    public boolean isPossibleEvent(Date date) {
-        return isPossibleDate(date);
+    public Amount calculateTotalDiscountAmount() {
+        if (isPossibleDate(date.getDate())) {
+            int dateCount = calculateDateCount(date);
+            int discount = (int) Constant.INITIAL_DISCOUNT_AMOUNT.getValue() + calculateDiscountAmount(dateCount);
+            return new Amount(discount);
+        }
+        return new Amount(0);
     }
 
     @Override
-    public int calculateTotalDiscountAmount() {
-        applied = true;
-        int dateCount = calculateDateCount(date);
-        int discountAmount = calculateDiscountAmount(dateCount);
-        return (int) Constant.INITIAL_DISCOUNT_AMOUNT.getValue() + discountAmount;
+    public String getName() {
+        return DiscountEventName.CHRISTMAS_EVENT.get();
     }
 
-    @Override
-    public boolean isApplied() {
-        return applied;
+    private boolean isPossibleDate(Date date) {
+        return date.isInRange((int) Constant.FIRST_DATE.getValue(), (int) Constant.CHRISTMAS_DATE.getValue());
     }
 
-    private int calculateDateCount(Date orderDate) {
-        if (isFirstDate(orderDate)) {
+    private int calculateDateCount(OrderDate date) {
+        if (isFirstDate(date.getDate())) {
             return (int) Constant.FIRST_DATE.getValue();
         }
-        return orderDate.getDay() - (int) Constant.FIRST_DATE.getValue();
+        return date.getDate().getDay() - (int) Constant.FIRST_DATE.getValue();
     }
 
     private int calculateDiscountAmount(int dateCount) {
@@ -56,14 +51,6 @@ public class ChristmasDiscountEvent implements DiscountEvent {
 
     private boolean isFirstDate(Date date) {
         return date.getDay() == (int) Constant.FIRST_DATE.getValue();
-    }
-
-    private boolean isPossibleDate(Date date) {
-        return date.isInRange((int) Constant.FIRST_DATE.getValue(), (int) Constant.CHRISTMAS_DATE.getValue());
-    }
-
-    public String getDescription() {
-        return DiscountEventName.CHRISTMAS_EVENT.get();
     }
 
 }
