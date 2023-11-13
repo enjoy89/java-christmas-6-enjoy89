@@ -1,15 +1,14 @@
 package christmas.model.discount;
 
 public class Amount {
+    private final int amount;
 
-    private final int totalAmount;
-
-    public Amount(int totalAmount) {
-        this.totalAmount = totalAmount;
+    public Amount(int amount) {
+        this.amount = amount;
     }
 
     public int getAmount() {
-        return totalAmount;
+        return amount;
     }
 
 }
