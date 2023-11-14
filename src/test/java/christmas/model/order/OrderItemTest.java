@@ -58,6 +58,34 @@ class OrderItemTest {
         assertThat(expectedTotalPrice).isNotEqualTo(orderItem.calculateTotalPrice());
     }
 
+    @DisplayName("메뉴 이름을 통해 카테고리를 가져오는 기능 테스트")
+    @Test
+    void getCategory() {
+        //given
+        String menuName = "양송이수프";
+        OrderItem orderItem = new OrderItem(menuName, 1);
+
+        //when
+        MenuCategory category = orderItem.getCategory();
+
+        //then
+        assertThat(category).isEqualTo(MenuCategory.APPETIZER);
+    }
+
+    @DisplayName("메뉴 이름을 통해 카테고리를 가져오는 기능 예외 테스트")
+    @Test
+    void getCategory2() {
+        //given
+        String menuName = "양송이수프";
+        OrderItem orderItem = new OrderItem(menuName, 1);
+
+        //when
+        MenuCategory category = orderItem.getCategory();
+
+        //then
+        assertThat(category).isNotEqualTo(MenuCategory.MAIN);
+    }
+
     @DisplayName("메뉴 이름을 통해 메뉴 객체의 정보를 가져오는 기능 테스트")
     @Test
     void getMenuByName() {
@@ -85,6 +113,5 @@ class OrderItemTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(ErrorMessage.INVALID_ORDER.get());
     }
-
 
 }
