@@ -3,7 +3,6 @@ package christmas.model.order;
 import christmas.common.ErrorMessage;
 
 public class OrderItem {
-
     private final String menuName;
     private final int quantity;
 
@@ -25,15 +24,6 @@ public class OrderItem {
         return menu.getPrice() * quantity;
     }
 
-    private Menu getMenuByName(String menuName) {
-        for (Menu menu : Menu.values()) {
-            if (menu.getName().equals(menuName)) {
-                return menu;
-            }
-        }
-        throw new IllegalArgumentException(ErrorMessage.INVALID_ORDER.get());
-    }
-
     public MenuCategory getCategory() {
         Menu menu = getMenuByName(menuName);
         return menu.getCategory();
@@ -41,5 +31,14 @@ public class OrderItem {
 
     public Menu getMenuByOrderItem() {
         return getMenuByName(getMenuName());
+    }
+
+    private Menu getMenuByName(String menuName) {
+        for (Menu menu : Menu.values()) {
+            if (menu.getName().equals(menuName)) {
+                return menu;
+            }
+        }
+        throw new IllegalArgumentException(ErrorMessage.INVALID_ORDER.get());
     }
 }
