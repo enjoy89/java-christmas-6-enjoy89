@@ -4,7 +4,6 @@ import christmas.common.ErrorMessage;
 import christmas.utils.InputValueValidator;
 
 public class OrderDate {
-
     private final Date date;
 
     private OrderDate(Date date) {
@@ -37,5 +36,4 @@ public class OrderDate {
             throw new IllegalArgumentException(ErrorMessage.INVALID_DATE.get());
         }
     }
-
 }
