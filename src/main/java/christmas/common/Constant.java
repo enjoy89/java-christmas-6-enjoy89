@@ -14,7 +14,9 @@ public enum Constant {
     BAR("-"),
     MAX_ORDER_QUANTITY(20),
     MIN_MENU_QUANTITY(1),
-    ORDER_FORMAT_REGEX("([가-힣]+-\\d+)(,[가-힣]+-\\d+)*");
+    ORDER_FORMAT_REGEX("([가-힣]+-\\d+)(,[가-힣]+-\\d+)*"),
+    NOTHING("없음"),
+    LINE("\n");
 
     private final Object value;
 
