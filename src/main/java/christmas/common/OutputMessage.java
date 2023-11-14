@@ -1,6 +1,7 @@
 package christmas.common;
 
 public enum OutputMessage {
+    PRIZE_FORMAT("#,###원"),
     START_INSTRUCTIONS("안녕하세요! 우테코 식당 12월 이벤트 플래너입니다."),
     PREVIEW_INSTRUCTIONS_PREFIX("12월 "),
     PREVIEW_INSTRUCTIONS_POSTFIX("일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!"),
@@ -18,7 +19,7 @@ public enum OutputMessage {
         this.message = message;
     }
 
-    public String getMessage() {
+    public String get() {
         return message;
     }
 }
