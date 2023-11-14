@@ -89,12 +89,14 @@ public class OrderInformation {
 
     private boolean hasDuplicateMenu() {
         Set<Menu> uniqueMenus = new HashSet<>();
+        boolean hasDuplicate = false;
+
         for (OrderItem orderItem : orderItems) {
             if (!uniqueMenus.add(orderItem.getMenuByOrderItem())) {
-                return true;
+                hasDuplicate = true;
             }
         }
-        return false;
+        return hasDuplicate;
     }
 
 }
