@@ -1,25 +1,34 @@
 package christmas.model.discount;
 
+import christmas.common.Constant;
 import christmas.common.DiscountEventName;
 import christmas.model.order.Menu;
 
-public class GiftEvent implements DiscountEvent {
+public class GiftEvent {
 
-    public static GiftEvent of() {
-        return new GiftEvent();
+    private final Amount totalAmount;
+
+    private GiftEvent(Amount totalAmount) {
+        this.totalAmount = totalAmount;
     }
 
-    @Override
-    public Amount calculateTotalDiscountAmount() {
-        return new Amount(getGiftMenu());
+    public static GiftEvent of(Amount totalAmount) {
+        return new GiftEvent(totalAmount);
+    }
+
+    public Amount getBenefit() {
+        int benefit = 0;
+        if (isPossible()) {
+            benefit = getGiftMenu();
+        }
+        return new Amount(benefit);
     }
 
     private int getGiftMenu() {
         return Menu.DRINK_3.getPrice();
     }
 
-    @Override
-    public String getName() {
-        return DiscountEventName.GIFT_EVENT.get();
+    private boolean isPossible() {
+        return totalAmount.amount() >= (int) Constant.GIFT_EVENT_AMOUNT.getValue();
     }
 }

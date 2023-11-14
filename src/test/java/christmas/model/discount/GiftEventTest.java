@@ -12,10 +12,11 @@ class GiftEventTest {
     @Test
     void calculateTotalDiscountAmount() {
         //given
-        GiftEvent giftEvent = GiftEvent.of();
+        Amount totalAmount = new Amount(10000);
+        GiftEvent giftEvent = GiftEvent.of(totalAmount);
 
         //when
-        Amount amount = giftEvent.calculateTotalDiscountAmount();
+        Amount amount = giftEvent.getBenefit();
 
         //then
         assertThat(amount.amount()).isNotEqualTo(0);
@@ -25,10 +26,11 @@ class GiftEventTest {
     @Test
     void calculateTotalDiscountAmount2() {
         //given
-        GiftEvent giftEvent = GiftEvent.of();
+        Amount totalAmount = new Amount(10000);
+        GiftEvent giftEvent = GiftEvent.of(totalAmount);
 
         //when
-        Amount amount = giftEvent.calculateTotalDiscountAmount();
+        Amount amount = giftEvent.getBenefit();
 
         //then
         assertThat(amount.amount()).isEqualTo(Menu.DRINK_3.getPrice()); // 샴페인 가격

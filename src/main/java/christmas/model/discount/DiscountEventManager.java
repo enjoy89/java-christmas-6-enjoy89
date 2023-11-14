@@ -1,6 +1,5 @@
 package christmas.model.discount;
 
-import christmas.common.Constant;
 import christmas.model.order.OrderDate;
 import christmas.model.order.OrderInformation;
 import java.util.ArrayList;
@@ -9,9 +8,8 @@ import java.util.List;
 import java.util.Map;
 
 public class DiscountEventManager {
-    private Map<String, Integer> appliedDiscountEvents;
-    private List<DiscountEvent> discountEvents;
-    private GiftEvent giftEvent;
+    private final List<DiscountEvent> discountEvents;
+    private final Map<String, Integer> appliedDiscountEvents;
 
     public DiscountEventManager(OrderDate orderDate, OrderInformation orderInformation) {
         this.discountEvents = new ArrayList<>();
@@ -19,7 +17,6 @@ public class DiscountEventManager {
         this.discountEvents.add(WeekdayDiscountEvent.of(orderDate, orderInformation));
         this.discountEvents.add(WeekendDiscountEvent.of(orderDate, orderInformation));
         this.discountEvents.add(SpecialDiscountEvent.of(orderDate));
-        this.giftEvent = GiftEvent.of();
         this.appliedDiscountEvents = new HashMap<>();
     }
 
@@ -31,12 +28,8 @@ public class DiscountEventManager {
             if (discountAmount.amount() > 0) {
                 appliedDiscountEvents.put(discountEvent.getName(), discountAmount.amount());
             }
-
             totalDiscount += discountAmount.amount();
         }
-
-        Amount applyGiftEvent = applyGiftEvent(totalDiscount);
-        totalDiscount += applyGiftEvent.amount();
         return new Amount(totalDiscount);
     }
 
@@ -44,17 +37,13 @@ public class DiscountEventManager {
         return appliedDiscountEvents;
     }
 
-    private Amount applyGiftEvent(int totalDiscount) {
-        int applyGiftEvent = 0;
-        if (canApplyGiftEvent(totalDiscount)) {
-            applyGiftEvent = giftEvent.calculateTotalDiscountAmount().amount();
+    public Amount getTotalDiscountAmount() {
+        int totalDiscount = 0;
+        applyDiscount();
+
+        for (Map.Entry<String, Integer> entry : appliedDiscountEvents.entrySet()) {
+            totalDiscount += entry.getValue();
         }
-        appliedDiscountEvents.put(giftEvent.getName(), applyGiftEvent);
-        return new Amount(applyGiftEvent);
+        return new Amount(totalDiscount);
     }
-
-    private boolean canApplyGiftEvent(int totalDiscount) {
-        return totalDiscount >= (int) Constant.GIFT_EVENT_AMOUNT.getValue();
-    }
-
 }
