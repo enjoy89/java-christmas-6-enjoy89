@@ -110,7 +110,7 @@ class OrderParserTest {
                 .hasMessageContaining(ErrorMessage.INVALID_ORDER.get());
     }
 
-    @DisplayName("주문의 입력이 올바른지 검사하는 기능 예외 테스트 - 메뉴와 수량 사이 - 존재")
+    @DisplayName("주문의 입력이 올바른지 검사하는 기능 예외 테스트 - 메뉴와 수량 사이 ',' 존재")
     @Test
     void parseOrder7() {
         //given
@@ -153,7 +153,46 @@ class OrderParserTest {
     @Test
     void parseOrder10() {
         //given
-        String input = "해산물파스타-1,제로콜라-";
+        String input = "해산물파스타-1,제로콜라,";
+
+        //when
+        //then
+        assertThatThrownBy(() -> OrderParser.parseOrder(input))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining(ErrorMessage.INVALID_ORDER.get());
+    }
+
+    @DisplayName("주문의 입력이 올바른지 검사하는 기능 예외 테스트 - 맨끝값 -")
+    @Test
+    void parseOrder11() {
+        //given
+        String input = "시저샐러드-1,시저샐러드-";
+
+        //when
+        //then
+        assertThatThrownBy(() -> OrderParser.parseOrder(input))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining(ErrorMessage.INVALID_ORDER.get());
+    }
+
+    @DisplayName("주문의 입력이 올바른지 검사하는 기능 예외 테스트 - 메뉴명을 한글과 영어 혼합하여 사용하는 경우")
+    @Test
+    void parseOrder12() {
+        //given
+        String input = "시저샐러드a-1,";
+
+        //when
+        //then
+        assertThatThrownBy(() -> OrderParser.parseOrder(input))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining(ErrorMessage.INVALID_ORDER.get());
+    }
+
+    @DisplayName("주문의 입력이 올바른지 검사하는 기능 예외 테스트 - 메뉴명에 특수문자")
+    @Test
+    void parseOrder13() {
+        //given
+        String input = "@-1,";
 
         //when
         //then
