@@ -108,4 +108,17 @@ class OrderInformationTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(ErrorMessage.INVALID_ORDER.get());
     }
+
+    @DisplayName("메뉴판에 없는 메뉴를 주문하는 경우 예외 발생 테스트")
+    @Test
+    void validate6() {
+        //given
+        String orderInfo = "이건이상한메뉴야-1";
+
+        //when
+        //then
+        assertThatThrownBy(() -> OrderInformation.of(orderInfo))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining(ErrorMessage.INVALID_ORDER.get());
+    }
 }
