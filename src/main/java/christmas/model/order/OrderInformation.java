@@ -11,14 +11,18 @@ public class OrderInformation {
     private final List<OrderItem> orderItems;
     private final Amount totalAmount;
 
-    private OrderInformation(List<OrderItem> orderItems) {
-        this.orderItems = orderItems;
+    private OrderInformation(String orderInfo) {
+        this.orderItems = parseOrder(orderInfo);
         validateOrder();
         this.totalAmount = calculateTotalOrderAmount();
     }
 
     public static OrderInformation of(String orderInfo) {
-        return new OrderInformation(OrderParser.parseOrder(orderInfo));
+        return new OrderInformation(orderInfo);
+    }
+
+    private List<OrderItem> parseOrder(String orderInfo) {
+        return OrderParser.parseOrder(orderInfo);
     }
 
     public List<OrderItem> getOrderItems() {
