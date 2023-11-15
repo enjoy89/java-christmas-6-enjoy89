@@ -3,8 +3,8 @@ package christmas.view;
 import christmas.common.Constant;
 import christmas.common.OutputMessage;
 import christmas.model.discount.Amount;
+import christmas.model.discount.Badge;
 import christmas.model.order.Date;
-import christmas.model.order.Menu;
 import christmas.model.order.OrderItem;
 import java.text.DecimalFormat;
 import java.util.List;
@@ -37,10 +37,10 @@ public class OutputView {
 
     public static void printGiftMenu(Amount giftBenefit) {
         System.out.println(String.format(Constant.LINE.getValue() + "%s", OutputMessage.GIFT_MENU.get()));
-        if (giftBenefit.amount() == 0) {
-            System.out.println(Constant.NOTHING.getValue());
+        if (giftBenefit.amount() > 0) {
+            System.out.println(OutputMessage.CHAMPAGNE.get());
         }
-        System.out.println(Menu.DRINK_3.getName());
+        System.out.println(Constant.NOTHING.getValue());
     }
 
     public static void printBenefitsDetails(Map<String, Integer> appliedDiscountEvents) {
@@ -48,14 +48,17 @@ public class OutputView {
         if (appliedDiscountEvents.isEmpty()) {
             System.out.println(Constant.NOTHING.getValue());
         }
-
         appliedDiscountEvents.forEach((name, discount) ->
                 System.out.println(String.format("%s: -%s", name, PRIZE_FORMAT.format(discount))));
     }
 
     public static void printTotalBenefitAmount(Amount totalBenefitAmount) {
-        System.out.println(String.format(Constant.LINE.getValue() + "%s%n%s", OutputMessage.TOTAL_BENEFIT_AMOUNT.get(),
-                PRIZE_FORMAT.format(totalBenefitAmount.amount())));
+        System.out.println(String.format(Constant.LINE.getValue() + "%s", OutputMessage.TOTAL_BENEFIT_AMOUNT.get()));
+        if (totalBenefitAmount.amount() > 0) {
+            System.out.println(
+                    String.format("%n%s", Constant.BAR.getValue(), PRIZE_FORMAT.format(totalBenefitAmount.amount())));
+        }
+        System.out.println(OutputMessage.NOT_APPLIED.get());
     }
 
     public static void printAmountAfterDiscount(Amount afterDiscount) {
@@ -63,7 +66,12 @@ public class OutputView {
                 PRIZE_FORMAT.format(afterDiscount.amount())));
     }
 
-    public static void printEventBadge() {
-        System.out.println(Constant.LINE.getValue() + OutputMessage.EVENT_BADGE.get());
+    public static void printEventBadge(Badge badge) {
+        System.out.println(String.format(Constant.LINE.getValue() + "%s%n%s", OutputMessage.EVENT_BADGE.get(),
+                badge.getName()));
+    }
+
+    public static void printErrorMessage(String message) {
+        System.out.println(message);
     }
 }
