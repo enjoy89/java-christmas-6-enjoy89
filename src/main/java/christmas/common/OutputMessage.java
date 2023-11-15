@@ -16,6 +16,7 @@ public enum OutputMessage {
     AMOUNT_AFTER_DISCOUNT("<할인 후 예상 결제 금액>"),
     EVENT_BADGE("<12월 이벤트 배지>"),
     NOT_APPLIED("0원");
+
     private String message;
 
     OutputMessage(String message) {
