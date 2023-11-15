@@ -1,0 +1,59 @@
+src
+├── main
+│   └── java
+│       └── christmas
+│           ├── Application.java
+│           ├── common
+│           │   ├── Constant.java
+│           │   ├── DiscountEventName.java
+│           │   ├── ErrorMessage.java
+│           │   ├── InputMessage.java
+│           │   └── OutputMessage.java
+│           ├── controller
+│           │   └── MainController.java
+│           ├── model
+│           │   ├── discount
+│           │   │   ├── Amount.java
+│           │   │   ├── Badge.java
+│           │   │   ├── Benefit.java
+│           │   │   ├── ChristmasDiscountEvent.java
+│           │   │   ├── DiscountEvent.java
+│           │   │   ├── DiscountEventManager.java
+│           │   │   ├── GiftEvent.java
+│           │   │   ├── SpecialDiscountEvent.java
+│           │   │   ├── WeekdayDiscountEvent.java
+│           │   │   └── WeekendDiscountEvent.java
+│           │   └── order
+│           │       ├── Date.java
+│           │       ├── Menu.java
+│           │       ├── MenuCategory.java
+│           │       ├── Order.java
+│           │       ├── OrderDate.java
+│           │       ├── OrderInformation.java
+│           │       ├── OrderItem.java
+│           │       └── OrderParser.java
+│           ├── utils
+│           │   └── InputValueValidator.java
+│           └── view
+│               ├── InputView.java
+│               └── OutputView.java
+└── test
+└── java
+└── christmas
+├── ApplicationTest.java
+└── model
+├── discount
+│   ├── BenefitTest.java
+│   ├── ChristmasDiscountEventTest.java
+│   ├── DiscountEventManagerTest.java
+│   ├── GiftEventTest.java
+│   ├── SpecialDiscountEventTest.java
+│   ├── WeekdayDiscountEventTest.java
+│   └── WeekendDiscountEventTest.java
+└── order
+├── DateTest.java
+├── OrderDateTest.java
+├── OrderInformationTest.java
+├── OrderItemTest.java
+├── OrderParserTest.java
+└── OrderTest.java
