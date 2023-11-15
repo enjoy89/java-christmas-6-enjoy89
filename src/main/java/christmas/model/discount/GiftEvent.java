@@ -1,11 +1,9 @@
 package christmas.model.discount;
 
 import christmas.common.Constant;
-import christmas.common.DiscountEventName;
 import christmas.model.order.Menu;
 
 public class GiftEvent {
-
     private final Amount totalAmount;
 
     private GiftEvent(Amount totalAmount) {

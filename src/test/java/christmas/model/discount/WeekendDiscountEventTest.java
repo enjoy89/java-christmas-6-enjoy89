@@ -25,11 +25,11 @@ class WeekendDiscountEventTest {
         assertThat(discount.amount()).isNotEqualTo(0);
     }
 
-    @DisplayName("주말 할인 이벤트를 적용할 수 있는지 검사하는 기능 예외 테스트")
+    @DisplayName("주말 할인 이벤트를 평일에 적용할 수 있는지 검사하는 기능 예외 테스트")
     @Test
     void isPossibleEvent2() {
         //given
-        OrderDate date = OrderDate.of("4");
+        OrderDate date = OrderDate.of("4"); // 평일
         OrderInformation orderInformation = OrderInformation.of("티본스테이크-1");
         WeekendDiscountEvent weekendDiscountEvent = WeekendDiscountEvent.of(date, orderInformation);
 

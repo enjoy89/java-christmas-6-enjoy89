@@ -20,17 +20,13 @@ public class DiscountEventManager {
         this.appliedDiscountEvents = new HashMap<>();
     }
 
-    public Amount applyDiscount() {
-        int totalDiscount = 0;
-
+    public void applyDiscount() {
         for (DiscountEvent discountEvent : discountEvents) {
             Amount discountAmount = discountEvent.calculateTotalDiscountAmount();
             if (discountAmount.amount() > 0) {
                 appliedDiscountEvents.put(discountEvent.getName(), discountAmount.amount());
             }
-            totalDiscount += discountAmount.amount();
         }
-        return new Amount(totalDiscount);
     }
 
     public Map<String, Integer> getAppliedDiscountEvents() {
